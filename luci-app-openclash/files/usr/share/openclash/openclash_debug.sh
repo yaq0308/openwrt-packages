@@ -1,18 +1,19 @@
 #!/bin/bash
 . /lib/functions.sh
+. /usr/share/openclash/openclash_ps.sh
 
-status=$(ps|grep -c /usr/share/openclash/openclash_debug.sh)
+status=$(unify_ps_status "openclash_debug.sh")
 [ "$status" -gt "3" ] && exit 0
 
 DEBUG_LOG="/tmp/openclash_debug.log"
 LOGTIME=$(date "+%Y-%m-%d %H:%M:%S")
+uci commit openclash
 
 enable_custom_dns=$(uci get openclash.config.enable_custom_dns 2>/dev/null)
 rule_source=$(uci get openclash.config.rule_source 2>/dev/null)
 enable_custom_clash_rules=$(uci get openclash.config.enable_custom_clash_rules 2>/dev/null) 
 ipv6_enable=$(uci get openclash.config.ipv6_enable 2>/dev/null)
 enable_redirect_dns=$(uci get openclash.config.enable_redirect_dns 2>/dev/null)
-direct_dns=$(uci get openclash.config.direct_dns 2>/dev/null)
 disable_masq_cache=$(uci get openclash.config.disable_masq_cache 2>/dev/null)
 proxy_mode=$(uci get openclash.config.proxy_mode 2>/dev/null)
 intranet_allowed=$(uci get openclash.config.intranet_allowed 2>/dev/null)
@@ -110,6 +111,9 @@ cat >> "$DEBUG_LOG" <<-EOF
 运行状态: 未运行
 EOF
 fi
+if [ "$core_type" = "0" ]; then
+   core_type="未选择架构"
+fi
 cat >> "$DEBUG_LOG" <<-EOF
 已选择的架构: $core_type
 
@@ -195,7 +199,6 @@ UDP流量转发: $(ts_cf "$enable_udp_proxy")
 DNS劫持: $(ts_cf "$enable_redirect_dns")
 自定义DNS: $(ts_cf "$enable_custom_dns")
 IPV6-DNS解析: $(ts_cf "$ipv6_enable")
-Real-IP-DNS地址: $direct_dns
 禁用Dnsmasq缓存: $(ts_cf "$disable_masq_cache")
 自定义规则: $(ts_cf "$enable_custom_clash_rules")
 仅允许内网: $(ts_cf "$intranet_allowed")
@@ -260,10 +263,10 @@ if [ -n "$(grep OpenClash-General-Settings "$CONFIG_FILE")" ]; then
 else
    /usr/share/openclash/yml_field_name_ch.sh "$CONFIG_FILE" 2>/dev/null
    proxy_len=$(sed -n '/^Proxy:/=' "$CONFIG_FILE" 2>/dev/null)
-   provider_len=$(sed -n '/^proxy-provider:/=' "$CONFIG_FILE" 2>/dev/null)
-   group_len=$(sed -n '/^Proxy Group:/=' "$CONFIG_FILE" 2>/dev/null)
+   provider_len=$(sed -n '/^proxy-providers:/=' "$CONFIG_FILE" 2>/dev/null)
+   group_len=$(sed -n '/^proxy-groups:/=' "$CONFIG_FILE" 2>/dev/null)
    dns_len=$(sed -n '/^dns:/=' "$CONFIG_FILE" 2>/dev/null)
-   rule_len=$(sed -n '/^Rule:/=' "$CONFIG_FILE" 2>/dev/null)
+   rule_len=$(sed -n '/^rules:/=' "$CONFIG_FILE" 2>/dev/null)
    if [ "$dns_len" -ge "$proxy_len" ] || [ "$dns_len" -ge "$rule_len" ] || [ "$dns_len" -ge "$group_len" ]; then
    	  echo "错误: 不支持的配置文件， General 设置部分应位于开头，请根据模板修改后重试！" >> "$DEBUG_LOG"
    fi 2>/dev/null
@@ -279,11 +282,11 @@ else
    if [ "$proxy_len" -le "$provider_len" ]; then
       sed '/^ \{0,\}Proxy:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
    elif [ "$proxy_len" -ge "$provider_len" ]; then
-      sed '/^ \{0,\}proxy-provider:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
+      sed '/^ \{0,\}proxy-providers:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
    elif [ -n "$proxy_len" ] && [ -z "$provider_len" ]; then
       sed '/^ \{0,\}Proxy:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
    elif [ -z "$proxy_len" ] && [ -n "$provider_len" ]; then
-      sed '/^ \{0,\}proxy-provider:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
+      sed '/^ \{0,\}proxy-providers:/,$d' "$CONFIG_FILE" >> "$DEBUG_LOG" 2>/dev/null
    fi 2>/dev/null
 fi
 

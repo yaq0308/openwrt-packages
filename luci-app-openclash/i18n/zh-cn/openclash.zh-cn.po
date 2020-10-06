@@ -6,7 +6,7 @@ msgid "OpenClash"
 msgstr "OpenClash"
 
 msgid "A Clash Client For OpenWrt"
-msgstr "一个运行在OpenWrt上的Clash客户端，兼容Shadowsocks、Vmess、Trojan、Snell等协议，根据灵活的规则配置实现策略代理"
+msgstr "一个运行在OpenWrt上的Clash客户端，兼容Shadowsocks、ShadowsocksR、Vmess、Trojan、Snell等协议，根据灵活的规则配置实现策略代理"
 
 msgid "Global Settings(Will Modify The Config File Or Subscribe According To The Settings On This Page)"
 msgstr "全局设置（将按照本页设置自动修改配置文件和获取订阅）"
@@ -20,8 +20,17 @@ msgstr "运行状态"
 msgid "Global Settings"
 msgstr "全局设置"
 
+msgid "Rule Providers and Groups"
+msgstr "规则集与策略组管理"
+
 msgid "Game Rules and Groups"
 msgstr "游戏规则与策略组管理"
+
+msgid "Other Rule Providers and Groups"
+msgstr "第三方规则集与策略组管理"
+
+msgid "Custom Rule Providers and Groups"
+msgstr "自定义规则集与策略组管理"
 
 msgid "General Settings"
 msgstr "常规设置"
@@ -113,14 +122,20 @@ msgstr "Redir-Host（游戏）模式【依赖kmod-tun】"
 msgid "fake-ip-vpn(game mode)"
 msgstr "Fake-IP（游戏）模式【依赖kmod-tun】"
 
+msgid "redir-host-mix(tun mix mode)"
+msgstr "Redir-Host（TUN-混合）模式【依赖kmod-tun】【UDP-TUN，TCP-转发】"
+
+msgid "fake-ip-mix(tun mix mode)"
+msgstr "Fake-IP（TUN-混合）模式【依赖kmod-tun】【UDP-TUN，TCP-转发】"
+
 msgid "Select Mode For OpenClash Work, Try Flush DNS Cache If Network Error"
 msgstr "选择运行模式，Redir-Host模式下无法代理路由器自身流量，如客户端的网络异常请尝试清除DNS缓存"
 
 msgid "Proxy Mode"
 msgstr "*代理模式"
 
-msgid "Select Proxy Mode"
-msgstr "选择默认代理模式"
+msgid "Select Proxy Mode, Use Script Mode Could Prevent Proxy BT traffics If Rules Support, eg.lhie1's"
+msgstr "选择默认代理模式，如果规则支持，使用脚本模式可以阻止代理BT流量，比如lhie1规则"
 
 msgid "Rule Proxy Mode"
 msgstr "Rule【策略代理】"
@@ -130,6 +145,21 @@ msgstr "Global【全局代理（需前往控制面板手动指定节点）】"
 
 msgid "Direct Proxy Mode"
 msgstr "Direct【全局直连】"
+
+msgid "Script Proxy Mode (Tun Core Only)"
+msgstr "Script【脚本模式 - 仅Tun内核】"
+
+msgid "Select Stack Type"
+msgstr "网络栈类型"
+
+msgid "Select Stack Type For Tun Mode, According To The Running Speed on Your Machine"
+msgstr "请自行根据运行速度为Tun模式选择合适的网络栈"
+
+msgid "China IP Route"
+msgstr "实验性：绕过中国大陆IP"
+
+msgid "Bypass The China Network Flows, Improve Performance"
+msgstr "启用后中国大陆流量将不再经过内核，提升系统性能"
 
 msgid "Log Level"
 msgstr "日志等级"
@@ -195,15 +225,18 @@ msgid "(Please Don't Modify it at Will)"
 msgstr "（如您不知道选项有何用，请不要随意修改）"
 
 msgid "Specify DNS Server"
-msgstr "（Fake-IP模式）黑名单DNS服务器"
+msgstr "指定（第二）DNS服务器"
 
-msgid "Specify DNS Server For List, Only One IP Server Address Support"
-msgstr "指定下方列表中域名的DNS服务器，只支持填写一个IP地址"
+msgid "Specify DNS Server For List and Server Nodes With Fake-IP Mode, Only One IP Server Address Support"
+msgstr "指定下方列表中域名和Fake-IP模式下非代理集内节点的DNS服务器，只支持填写一个IP地址"
 
 msgid "Domain Names In The List Do Not Return Fake-IP, One rule per line"
 msgstr "每行请只填写一个域名，列表中的域名在（Fake-IP模式）下查询DNS时将返回真实IP地址，更改后点击上方按钮生效"
 
-msgid "Fake-IP Block List Update"
+msgid "Domain Names In The List Use The Custom DNS Server, One rule per line"
+msgstr "每行请只填写一个域名，列表中的域名将使用上方指定的DNS进行查询"
+
+msgid "Fake-IP-Filter List Update"
 msgstr "更新Fake-IP域名黑名单"
 
 msgid "Set OpenClash Upstream DNS Resolve Server"
@@ -234,9 +267,9 @@ msgid "(Communication protocol)"
 msgstr "(通讯协议)"
 
 msgid "Enable ipv6 Resolve"
-msgstr "IPV6类型DNS解析"
+msgstr "允许IPV6类型DNS解析"
 
-msgid "Force Enable to Resolve ipv6 DNS Requests"
+msgid "Enable Clash to Resolve ipv6 DNS Requests"
 msgstr ""
 "固件须配置好IPV6的NAT，如你不使用IPV6请关闭固件的相关服务，避免客户端连接出现异常"
 
@@ -254,6 +287,9 @@ msgstr "上传文件类型"
 
 msgid "Proxy Provider File"
 msgstr "代理集文件"
+
+msgid "Rule Provider File"
+msgstr "规则集文件"
 
 msgid "Upload"
 msgstr "上传"
@@ -273,6 +309,9 @@ msgstr "注意：只支持【yaml】后缀的文件，文件将被保存到 /etc
 
 msgid "Proxy Provider File List"
 msgstr "代理集文件列表"
+
+msgid "Rule Providers File List"
+msgstr "规则集文件列表"
 
 msgid "Please Make Sure Ports Available"
 msgstr "请确保端口可用"
@@ -355,6 +394,15 @@ msgstr "自动更新GEOIP数据库"
 msgid "Update GEOIP Database"
 msgstr "更新GEOIP数据库"
 
+msgid "Auto Update Chnroute Lists"
+msgstr "自动更新大陆白名单"
+
+msgid "Update Chnroute Lists"
+msgstr "更新大陆白名单"
+
+msgid "Chnroute Update"
+msgstr "大陆白名单订阅"
+
 msgid "Other Rules Update(Only in Use)"
 msgstr "正在使用第三方规则时才能更新"
 
@@ -372,6 +420,9 @@ msgstr "lhie1 规则"
 
 msgid "ConnersHua Rules"
 msgstr "ConnersHua 规则"
+
+msgid "ConnersHua(Provider-type) Rules"
+msgstr "ConnersHua(规则集) 规则"
 
 msgid "ConnersHua Return Rules"
 msgstr "ConnersHua 回国规则"
@@ -417,6 +468,9 @@ msgstr "亚洲流媒体流量"
 
 msgid "Proxy"
 msgstr "必须代理的流量"
+
+msgid "Youtube"
+msgstr "Youtube流量"
 
 msgid "Apple"
 msgstr "苹果服务流量"
@@ -546,6 +600,9 @@ msgstr "清空策略组配置"
 msgid "Back Configurations"
 msgstr "返回概览"
 
+msgid "Refresh Page"
+msgstr "刷新页面"
+
 msgid "Servers manage and Config create"
 msgstr "服务器&策略组管理（支持配置文件一键生成）"
 
@@ -570,6 +627,12 @@ msgstr "使用第三方规则快速创建配置文件（创建后可在全局设
 msgid "Disable Create Config"
 msgstr "只更新配置文件服务器节点信息"
 
+msgid "Mix Proxies"
+msgstr "混合节点"
+
+msgid "Mix This Page's Proxies"
+msgstr "一键生成配置文件时合并本页下方的所有代理服务器信息（不区分配置文件）"
+
 msgid "Type"
 msgstr "节点类型"
 
@@ -581,6 +644,9 @@ msgstr "服务器地址"
 
 msgid "Server Port"
 msgstr "服务器端口"
+
+msgid "UDP Support"
+msgstr "UDP支持"
 
 msgid "Ping Latency"
 msgstr "服务器延迟"
@@ -599,6 +665,18 @@ msgstr "密码"
 
 msgid "Encrypt Method"
 msgstr "加密方式"
+
+msgid "Protocol"
+msgstr "协议"
+
+msgid "Protocol param(optional)"
+msgstr "传输协议参数（可选）"
+
+msgid "Obfs"
+msgstr "混淆插件"
+
+msgid "Obfs param(optional)"
+msgstr "混淆参数（可选）"
 
 msgid "UDP Enable"
 msgstr "UDP支持"
@@ -630,6 +708,45 @@ msgstr "策略组配置（使用一键生成配置文件功能时无需设置）
 msgid "Proxys"
 msgstr "服务器节点配置"
 
+msgid "Edit Rule Providers"
+msgstr "编辑规则集配置"
+
+msgid "Rule Providers Type"
+msgstr "规则集类型"
+
+msgid "Choose The Rule Providers Type"
+msgstr "选择规则集类型"
+
+msgid "Append Position"
+msgstr "规则集匹配顺序"
+
+msgid "Priority Match"
+msgstr "优先（覆盖）"
+
+msgid "Extended Match"
+msgstr "扩展（补充）"
+
+msgid "Rule Providers Name"
+msgstr "别名（请勿重名）"
+
+msgid "Rule Behavior"
+msgstr "规则类型"
+
+msgid "Choose The Rule Behavior"
+msgstr "选择规则类型"
+
+msgid "Rule Providers Path"
+msgstr "规则集路径"
+
+msgid "Update Your Rule Providers File From Config Luci Page"
+msgstr "请先在配置文件管理页面上传您的规则集文件"
+
+msgid "Rule Providers URL"
+msgstr "规则集地址"
+
+msgid "Rule Providers Interval(s)"
+msgstr "规则集更新时间（秒）"
+
 msgid "Edit Group"
 msgstr "编辑策略组配置"
 
@@ -647,6 +764,9 @@ msgstr "检测地址（URL）"
 
 msgid "Test Interval(s)"
 msgstr "检测频率（秒）"
+
+msgid "Tolerance(ms)"
+msgstr "节点切换容忍值（毫秒）"
 
 msgid "Select"
 msgstr "Select【手动选择】"
@@ -674,6 +794,9 @@ msgstr "修改配置文件前添加的代理集必须已创建"
 
 msgid "Proxy Group"
 msgstr "添加到策略组（请勿重复添加）"
+
+msgid "Set Proxy Group"
+msgstr "指定策略组"
 
 msgid "No Need Set when Config Create, The added Proxy Groups Must Exist"
 msgstr "注意：使用一键生成配置文件功能时无需设置此项，修改配置文件前添加的策略组必须已创建"
@@ -748,7 +871,7 @@ msgid "Edit Proxy-Provider"
 msgstr "编辑代理集配置"
 
 msgid "Provider Type"
-msgstr "代理集类型
+msgstr "代理集类型"
 
 msgid "Choose The Provider Type"
 msgstr "选择代理集的类型"
@@ -780,6 +903,9 @@ msgstr "状态检查间隔（s）"
 msgid "Game Rule's Name"
 msgstr "选择游戏规则"
 
+msgid "Rule Provider's Name"
+msgstr "选择规则集（请勿重复添加）"
+
 msgid "Select Proxy Group"
 msgstr "选择策略组"
 
@@ -788,6 +914,12 @@ msgstr "游戏规则列表"
 
 msgid "Rule Name"
 msgstr "规则名称"
+
+msgid "Rule Type"
+msgstr "规则类型"
+
+msgid "Rule Author"
+msgstr "规则作者"
 
 msgid "Download Rule"
 msgstr "下载规则"
@@ -802,7 +934,13 @@ msgid "Order Number"
 msgstr "序号"
 
 msgid "Game Rules Manage"
-msgstr "管理游戏规则"
+msgstr "管理第三方游戏规则"
+
+msgid "Other Rule Provider Manage"
+msgstr "管理第三方规则集"
+
+msgid "Other Rule Providers List"
+msgstr "第三方规则集列表"
 
 msgid "Proxy UDP Traffics"
 msgstr "*UDP流量转发"
@@ -834,8 +972,8 @@ msgstr "切换"
 msgid "Access Control"
 msgstr "访问控制"
 
-msgid "Access Control Mode"
-msgstr "访问控制模式"
+msgid "LAN Access Control Mode"
+msgstr "局域网访问控制模式"
 
 msgid "Black List Mode"
 msgstr "黑名单模式"
@@ -849,8 +987,23 @@ msgstr "不走代理的局域网LAN IP"
 msgid "LAN Proxied Host List"
 msgstr "走代理的局域网LAN IP"
 
+msgid "WAN Bypassed Host List"
+msgstr "不走代理的WAN IP"
+
+msgid "In The Fake-IP Mode, Only Pure IP Requests Are Supported"
+msgstr "在Fake-IP模式下，只支持过滤纯IP类型的请求"
+
 msgid "Rule Match Proxy Mode"
 msgstr "*仅代理命中规则流量"
 
 msgid "Only Proxy Rules Match, Prevent BT Passing"
 msgstr "仅允许代理命中规则的流量，防止BT下载流量经过代理"
+
+msgid "Provider File Manage"
+msgstr "代理（规则）集文件管理"
+
+msgid "Config File Edit"
+msgstr "配置文件编辑"
+
+msgid "Delete All File"
+msgstr "删除所有文件"

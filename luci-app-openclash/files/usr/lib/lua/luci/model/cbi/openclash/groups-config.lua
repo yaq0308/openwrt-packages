@@ -62,7 +62,8 @@ o = s:option(Value, "name", translate("Group Name"))
 o.rmempty = false
 
 o = s:option(Value, "test_url", translate("Test URL"))
-o.default = "http://www.gstatic.com/generate_204"
+o:value("http://www.gstatic.com/generate_204")
+o:value("https://cp.cloudflare.com/generate_204")
 o.rmempty = false
 o:depends("type", "url-test")
 o:depends("type", "fallback")
@@ -75,6 +76,11 @@ o:depends("type", "url-test")
 o:depends("type", "fallback")
 o:depends("type", "load-balance")
 
+o = s:option(Value, "tolerance", translate("Tolerance(ms)"))
+o.default = "150"
+o.rmempty = true
+o:depends("type", "url-test")
+
 o = s:option(DynamicList, "other_group", translate("Other Group"))
 o.description = font_red..bold_on..translate("The Added Proxy Groups Must Exist Except 'DIRECT' & 'REJECT'")..bold_off..font_off
 uci:foreach("openclash", "groups",
@@ -86,6 +92,7 @@ uci:foreach("openclash", "groups",
 o:value("DIRECT")
 o:value("REJECT")
 o:depends("type", "select")
+o:depends("type", "relay")
 o.rmempty = true
 
 local t = {
@@ -98,7 +105,7 @@ o.inputtitle = translate("Commit Configurations")
 o.inputstyle = "apply"
 o.write = function()
    m.uci:commit(openclash)
-   sys.call("/usr/share/openclash/yml_groups_name_ch.sh start")
+   sys.call("/usr/share/openclash/yml_groups_name_ch.sh")
    luci.http.redirect(m.redirect)
 end
 

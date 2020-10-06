@@ -45,6 +45,9 @@ function config_check(CONFIG_FILE)
      rule = luci.sys.call(string.format('egrep "^ {0,}Rule:" "%s" >/dev/null 2>&1',CONFIG_FILE))
      if (rule ~= 0) then
         rule = luci.sys.call(string.format('egrep "^ {0,}rules:" "%s" >/dev/null 2>&1',CONFIG_FILE))
+        if (rule ~= 0) then
+           rule = luci.sys.call(string.format('egrep "^ {0,}script:" "%s" >/dev/null 2>&1',CONFIG_FILE))
+        end
      end
   end
   if yaml then
@@ -99,9 +102,9 @@ end
 e[t].check=translate(config_check(CONFIG_FILE))
 end
 end
-form=SimpleForm("filelist")
-form.reset=false
-form.submit=false
+
+form = Map("openclash")
+form.pageaction = false
 tb=form:section(Table,e)
 st=tb:option(DummyValue,"state",translate("State"))
 st.template="openclash/cfg_check"
@@ -139,9 +142,9 @@ local t = {
     {enable, disable}
 }
 
-ap = SimpleForm("apply")
-ap.reset = false
-ap.submit = false
+ap = Map("openclash")
+ap.pageaction = false
+
 ss = ap:section(Table, t)
 
 o = ss:option(Button, "enable") 
